@@ -18,3 +18,4 @@ class Techn:
                 return True
 
         return False
+
