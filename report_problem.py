@@ -108,4 +108,20 @@ class Problem:
         wb.save('problems.xlsx')
 
 
+    def return_Cproblem_lists(self):
+        wb = openpyxl.load_workbook('problems.xlsx')
+        p_sheet = wb['critical']
+        lists = []
+        mxrow = p_sheet.max_row
+        print(mxrow)
+        for i in range(2, mxrow + 1):
+            sublist = []
+            sublist.append(p_sheet.cell(row=i, column=1).value)
+            sublist.append(p_sheet.cell(row=i, column=2).value)
+            sublist.append(p_sheet.cell(row=i, column=5).value)
+            lists.append(sublist)
+        return lists
+
+
+
 
