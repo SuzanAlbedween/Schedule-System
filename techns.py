@@ -19,3 +19,18 @@ class Techn:
 
         return False
 
+
+    def add_tech(self, tech_name, username, pwd):
+        wb = openpyxl.load_workbook('techns.xlsx')
+        tc_sheet = wb['techns']
+        mxrow = tc_sheet.max_row
+        id = self.gene_tech_id()
+        tc_sheet['A' + str(mxrow + 1)] = id
+        tc_sheet['B' + str(mxrow + 1)] = tech_name
+        tc_sheet['C' + str(mxrow + 1)] = username
+        tc_sheet['D' + str(mxrow + 1)] = pwd
+        wb.save('techns.xlsx')
+
+        
+
+
