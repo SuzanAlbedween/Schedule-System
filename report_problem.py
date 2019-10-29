@@ -1,5 +1,6 @@
 import openpyxl
 from PyQt5.QtCore import QDate,QTime
+from datetime import  date
 
 class Problem:
 
@@ -75,20 +76,17 @@ class Problem:
                 return d
 
     def add_problem_to_file(self, product_name, client_id, descpn):
-       ## new_report = Problem()
-        ##typeis = new_report.return_problem_type(descpn)
         typeis =self.return_problem_type(descpn)
         product_id = self.return_product_id(product_name, client_id)
         wb = openpyxl.load_workbook('problems.xlsx')
         p_sheet = wb[typeis]
         id = 12345
         mxrow = p_sheet.max_row
-       # today_date = QDate.currentDate()
+        today_date = date.today()
         p_sheet['A' + str(mxrow + 1)] = id + 1
         p_sheet['B' + str(mxrow + 1)] = client_id
         p_sheet['C' + str(mxrow + 1)] = product_id
-        print(product_id)
-       # p_sheet['D' + str(mxrow + 1)] = today_date
+        p_sheet['D' + str(mxrow + 1)] = today_date
         p_sheet['E' + str(mxrow + 1)] = descpn
         wb.save('problems.xlsx')
 
