@@ -1,6 +1,7 @@
 import openpyxl
 from PyQt5.QtCore import QDate,QTime
 from datetime import  date
+import random
 
 class Problem:
 
@@ -54,6 +55,22 @@ class Problem:
                 break
 
         return ans
+
+    def is_probm_exist(self, probm_id,sheet):
+        probm_file = openpyxl.load_workbook('problems.xlsx')
+        pm_sheet = probm_file[sheet]
+        rows = pm_sheet.max_row
+        for i in range(2, rows + 1):
+            if (pm_sheet.cell(row=i, column=1).value == probm_id):
+                return True
+
+        return False
+
+    def gene_problem_id(self,sheet):
+        pm_id = random.randrange(1000000, 9999999)
+        if (self.is_probm_exist(pm_id,sheet) is True):
+            self.gene_problem_id()
+        return pm_id
 
     def return_problem_type(self, problem_name):
         wb = openpyxl.load_workbook('problems_types.xlsx')
