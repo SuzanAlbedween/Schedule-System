@@ -3,6 +3,7 @@ import openpyxl
 
 
 class Techn:
+    techID = list()
     def gene_tech_id(self):
         tech_id = random.randrange(100000, 999999)
         if (self.is_tech_exist(tech_id) is True):
@@ -29,6 +30,14 @@ class Techn:
         tc_sheet['B' + str(mxrow + 1)] = tech_name
         tc_sheet['C' + str(mxrow + 1)] = username
         tc_sheet['D' + str(mxrow + 1)] = pwd
+        wb.save('techns.xlsx')
+
+    def get_all_ids(self):
+        wb = openpyxl.load_workbook('techns.xlsx')
+        tc_sheet = wb['techns']
+        mxrow = tc_sheet.max_row
+        for i in range(2, mxrow + 1):
+            self.techID.append(tc_sheet.cell(row=i, column=1).value)
         wb.save('techns.xlsx')
 
         
