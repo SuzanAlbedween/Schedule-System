@@ -6,7 +6,7 @@ from PyQt5.QtCore import *
 from OrganizedGUI import Ui_MainWindow
 from product import Product
 from clientCls import Clent
-from techn import Techn
+from techns import Techn
 
 
 class organiz_app(QMainWindow,Ui_MainWindow,Product, Clent,Techn):
@@ -54,8 +54,7 @@ class organiz_app(QMainWindow,Ui_MainWindow,Product, Clent,Techn):
         lo=self.client_location.text()
         print(n,lo)
         self.add_client_to_excel(n,lo)
-        #self.add_client_to_excel(name,loc)
-        #self.add_client_to_excel(name,loc)
+
 
 
     def pushtech(self):
