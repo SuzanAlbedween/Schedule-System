@@ -10,18 +10,24 @@ After the visit, Technician can report whether the problem has been fixed or not
 __________________________________________________________________________________________________________________________________
 ***Project status and Issues:***
 
-* **before Oct. 23rd 2019**
+
 
     - Project sketching
     - Project analysis 
     - Dividing missions 
 
-* **Oct. 23rd 2019**
+
 
     - Finishing the Gui interface: how to save the client choice from ComboBox
     - add_to_file function: the function gets details about a problem and adds it to the suitable Excel file.
     - README.md 
 
+	- Organizer screen: 
+		- adding: clients, technicians, products
+	
+	- Scheduling problems Algorithm
+	
+	- Technician screen
 -------------------------------------------------------------------------------------------------------------------------------------
 ***How to run***
 
