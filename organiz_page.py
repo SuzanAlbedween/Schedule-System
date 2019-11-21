@@ -5,17 +5,17 @@ from PyQt5 import  QtGui,QtCore
 from PyQt5.QtCore import *
 from OrganizedGUI import Ui_MainWindow
 from product import Product
-from clientCls import Clent
+from clientCls import Client
 from techns import Techn
 
 
-class organiz_app(QMainWindow,Ui_MainWindow,Product, Clent,Techn):
+class organize_app(QMainWindow,Ui_MainWindow,Product, Client,Techn):
 
     def __init__(self):
         QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         Product.__init__(self)
-        Clent.__init__(self)
+        Client.__init__(self)
         Techn.__init__(self)
         self.setupUi(self)
 
@@ -70,6 +70,6 @@ class organiz_app(QMainWindow,Ui_MainWindow,Product, Clent,Techn):
 #######################run app#######################################
 if __name__=="__main__":
     app=QApplication(sys.argv)
-    window=organiz_app()
+    window=organize_app()
     window.show()
     sys.exit(app.exec_())
