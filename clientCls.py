@@ -5,7 +5,7 @@ class Client:
 
 
     def is_id_exist(self,client_id):
-        clientfile = openpyxl.load_workbook('clients.xlsx')
+        clientfile = openpyxl.load_workbook('excel_files\\clients.xlsx')
         clientsheet = clientfile['clients']
         row_s=clientsheet.max_row
         for i in range(2,row_s+1):
@@ -22,7 +22,7 @@ class Client:
 
     def add_client_to_excel(self,client_name,client_location):
         print(client_name,client_location)
-        client_file=openpyxl.load_workbook('clients.xlsx')
+        client_file=openpyxl.load_workbook('excel_files\\clients.xlsx')
         client_sheet=client_file['clients']
         maxrow=client_sheet.max_row
         id=(self.client_random_id())
@@ -30,5 +30,5 @@ class Client:
         client_sheet['A'+str((maxrow+1))]=client_name
         client_sheet['B'+str(maxrow+1)]=id
         client_sheet['C'+str(maxrow+1)]=client_location
-        client_file.save('clients.xlsx')
+        client_file.save('excel_files\\clients.xlsx')
 
