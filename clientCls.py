@@ -1,6 +1,7 @@
 import openpyxl
 import random
-class Clent:
+
+class Client:
 
 
     def is_id_exist(self,client_id):
@@ -11,6 +12,7 @@ class Clent:
             if((clientsheet.cell(row=i,column=2).value)==(client_id)):
                 return True
             return False
+
     def client_random_id(self):
         client_id=random.randrange(1000,99999)
         if(self.is_id_exist(client_id) is True):
