@@ -7,7 +7,7 @@ class Problem:
 
     def get_problems_types(self):
         lsproblems=[]
-        f=openpyxl.load_workbook('problems_types.xlsx')
+        f=openpyxl.load_workbook('excel_files\\problems_types.xlsx')
         sheet1 = f.get_sheet_by_name('types')
         row = sheet1.max_row + 1
         for i in range(2,row):
@@ -27,7 +27,7 @@ class Problem:
 
     def get_client_product(self, client_id):
         ans = []
-        wb = openpyxl.load_workbook('products.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\products.xlsx')
         sheet1 = wb.get_sheet_by_name('products')
         for i in range(2, sheet1.max_column + 1):
             if sheet1.cell(row=i, column=3).value == client_id:
@@ -36,7 +36,7 @@ class Problem:
 
 
     def is_client_exist( self,client_id):
-        client_file = openpyxl.load_workbook('clients.xlsx')
+        client_file = openpyxl.load_workbook('excel_files\\clients.xlsx')
         client_sheet = client_file.get_sheet_by_name('clients')
         rows = client_sheet.max_row
         for i in range (2, rows +1):
@@ -47,7 +47,7 @@ class Problem:
     def get_client_choice(self, id,produc_choice):
         proud_ls=list(self.get_client_product(id))
         ans=[]
-        product_file = openpyxl.load_workbook('products.xlsx')
+        product_file = openpyxl.load_workbook('excel_files\\products.xlsx')
         product_sheet1 = product_file.get_sheet_by_name('products')
         for i in proud_ls:
             if(i==produc_choice):
@@ -57,7 +57,7 @@ class Problem:
         return ans
 
     def is_probm_exist(self, probm_id,sheet):
-        probm_file = openpyxl.load_workbook('problems.xlsx')
+        probm_file = openpyxl.load_workbook('excel_files\\problems.xlsx')
         pm_sheet = probm_file[sheet]
         rows = pm_sheet.max_row
         for i in range(2, rows + 1):
@@ -73,7 +73,7 @@ class Problem:
         return pm_id
 
     def return_problem_type(self, problem_name):
-        wb = openpyxl.load_workbook('problems_types.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\problems_types.xlsx')
         types_sheet = wb['types']
         rows = types_sheet.max_row
         for i in range(2, rows + 1):
@@ -81,7 +81,7 @@ class Problem:
                 return types_sheet.cell(row=i, column=1).value
 
     def return_product_id(self, product_name, client_id):
-        wb = openpyxl.load_workbook('products.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\products.xlsx')
         product_sheet = wb['products']
         rows = product_sheet.max_row
         print(product_name, client_id,rows)
@@ -95,7 +95,7 @@ class Problem:
     def add_problem_to_file(self, product_name, client_id, descpn):
         typeis =self.return_problem_type(descpn)
         product_id = self.return_product_id(product_name, client_id)
-        wb = openpyxl.load_workbook('problems.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
         p_sheet = wb[typeis]
         id = self.gene_problem_id(typeis)
         mxrow = p_sheet.max_row
@@ -105,11 +105,11 @@ class Problem:
         p_sheet['C' + str(mxrow + 1)] = product_id
         p_sheet['D' + str(mxrow + 1)] = today_date
         p_sheet['E' + str(mxrow + 1)] = descpn
-        wb.save('problems.xlsx')
+        wb.save('excel_files\\problems.xlsx')
 
 
     def return_Cproblem_lists(self):
-        wb = openpyxl.load_workbook('problems.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
         p_sheet = wb['critical']
         lists = []
         mxrow = p_sheet.max_row
