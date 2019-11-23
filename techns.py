@@ -11,18 +11,17 @@ class Techn:
         return tech_id
 
     def is_tech_exist(self, tech_id):
-        tech_file = openpyxl.load_workbook('techns.xlsx')
+        tech_file = openpyxl.load_workbook('excel_files\\techns.xlsx')
         tc_sheet = tech_file['techns']
         rows = tc_sheet.max_row
         for i in range(2, rows + 1):
             if (tc_sheet.cell(row=i, column=1).value == tech_id):
                 return True
-
         return False
 
 
     def add_tech(self, tech_name, username, pwd):
-        wb = openpyxl.load_workbook('techns.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\techns.xlsx')
         tc_sheet = wb['techns']
         mxrow = tc_sheet.max_row
         id = self.gene_tech_id()
@@ -33,13 +32,9 @@ class Techn:
         wb.save('techns.xlsx')
 
     def get_all_ids(self):
-        wb = openpyxl.load_workbook('techns.xlsx')
+        wb = openpyxl.load_workbook('excel_files\\techns.xlsx')
         tc_sheet = wb['techns']
         mxrow = tc_sheet.max_row
         for i in range(2, mxrow + 1):
             self.techID.append(tc_sheet.cell(row=i, column=1).value)
-        wb.save('techns.xlsx')
-
-        
-
-
+        wb.save('excel_files\\techns.xlsx')
