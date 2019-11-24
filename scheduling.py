@@ -1,12 +1,12 @@
 import openpyxl
 import random
 
+from techns import Techn
 
-from . import techns
 
-
-class Scheduling:
+class Scheduling(Techn):
     schedule = list()
+    techns_ids = list()
     times = list()
 
     def return_problem_duration(self, name_pm):
@@ -32,16 +32,20 @@ class Scheduling:
         return
 
     def init_times(self, length_of_schedule):
-        self.times = [[] for i in range(length_of_schedule)]
+        self.times = [60*8 for i in range(length_of_schedule)]
         return
+    def init_techn_ids(self):
+        t=Techn()
+        t.get_all_ids()
+        ids_of_tech =t.techID
+        return ids_of_tech
 
     def critical_problems_schedule(self):
-        all_critical_problems = []  # get_all_critical_problems()
-        tech = techns.Techn()
-        all_techns_id = tech.get_all_ids()
+        all_critical_problems = [[123,10],[111,15],[222,10],[333,10],[221,20],[212,10],[232,25]]  # get_all_critical_problems()
+        all_techns_id = self.init_techn_ids()
         num_of_techns=len(all_techns_id)
-        self.init_empty_schedule(self, len(all_techns_id))
-        self.init_times(self, num_of_techns)
+        self.init_empty_schedule(len(all_techns_id))
+        self.init_times(num_of_techns)
         current_techn = 0
         for problem in all_critical_problems:
             test = 0
@@ -50,11 +54,11 @@ class Scheduling:
                 current_techn = (current_techn + 1)%num_of_techns
                 test += 1
                 if test == num_of_techns:
-                    # report_error(problem)
                     break
                 has_time = True  # hasTime(all_techns_id[current_techn])
             if has_time:
                 self.schedule[current_techn].append(problem)
+                current_techn = (current_techn + 1) % num_of_techns
         # save_schedule()
         # report_errors()
 
@@ -63,3 +67,6 @@ class Scheduling:
 
 
 
+s=Scheduling()
+s.critical_problems_schedule()
+print(s.schedule)
