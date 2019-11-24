@@ -40,6 +40,19 @@ class Scheduling(Techn):
         ids_of_tech =t.techID
         return ids_of_tech
 
+    def GetAllProblemByType(self, type):
+        problems = list()
+
+        file = openpyxl.load_workbook('problems.xlsx')
+        sheet = file[type]
+        rows = sheet.max_row
+        for i in range(2, rows + 1):
+            detailsproblem = list()
+            for j in range(1, 6):
+                detailsproblem.append(sheet.cell(row=i, column=j).value)
+            problems.append(detailsproblem)
+        return problems
+
     def critical_problems_schedule(self):
         all_critical_problems = [[123,10],[111,15],[222,10],[333,10],[221,20],[212,10],[232,25]]  # get_all_critical_problems()
         all_techns_id = self.init_techn_ids()
