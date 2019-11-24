@@ -76,9 +76,3 @@ class Scheduling(Techn,Problem):
 
         self.problems_schedule('critical')
         self.problems_schedule('regular')
-
-
-
-
-s=Scheduling()
-print(s.get_problems_id_time('critical'))
