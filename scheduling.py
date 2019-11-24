@@ -17,6 +17,12 @@ class Scheduling(Techn,Problem):
             if (tp_sheet.cell(row=i, column=2).value == name_pm):
                 return tp_sheet.cell(row=i, column=3).value
 
+    def has_time(self, current_techn, time):
+        if (480 - (self.times[current_techn]) >= time):
+            return True
+        else:
+            return False
+
     def list_of_lists(self):
         clientfile = openpyxl.load_workbook('excel_files\clients.xlsx')
         clientsheet = clientfile['clients']
@@ -50,13 +56,13 @@ class Scheduling(Techn,Problem):
 
     def problems_schedule(self, type_of_problem):
         all_problems = self.get_problems_id_time(type_of_problem)
-        num_of_techns=len(self.techns_ids)
+        num_of_techns = len(self.techns_ids)
         current_techn = 0
         for problem in all_problems:
             test = 0
-            has_time = True  # hasTime(current_techn, problem[1])
-            while not has_time :
-                current_techn = (current_techn + 1)%num_of_techns
+            # has_time = True  # hasTime(current_techn, problem[1])
+            while not has_time(current_techn, problem):
+                current_techn = (current_techn + 1) % num_of_techns
                 test += 1
                 if test == num_of_techns:
                     break
