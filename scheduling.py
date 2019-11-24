@@ -2,9 +2,9 @@ import openpyxl
 import random
 
 from techns import Techn
+from problem import Problem
 
-
-class Scheduling(Techn):
+class Scheduling(Techn,Problem):
     schedule = list()
     techns_ids = list()
     times = list()
@@ -34,52 +34,51 @@ class Scheduling(Techn):
     def init_times(self, length_of_schedule):
         self.times = [60*8 for i in range(length_of_schedule)]
         return
+
     def init_techn_ids(self):
         t=Techn()
         t.get_all_ids()
-        ids_of_tech =t.techID
-        return ids_of_tech
+        techns_ids =t.techID
 
-    def GetAllProblemByType(self, type):
-        problems = list()
+    def get_problems_id_time(self,type_of_problem):
+        p = Problem()
+        all_problems = p.get_list_id_time(type_of_problem)
+        return all_problems
 
-        file = openpyxl.load_workbook('problems.xlsx')
-        sheet = file[type]
-        rows = sheet.max_row
-        for i in range(2, rows + 1):
-            detailsproblem = list()
-            for j in range(1, 6):
-                detailsproblem.append(sheet.cell(row=i, column=j).value)
-            problems.append(detailsproblem)
-        return problems
+    def update_time(self, current_techn, time):
+        self.times[current_techn] -= time
 
-    def critical_problems_schedule(self):
-        all_critical_problems = [[123,10],[111,15],[222,10],[333,10],[221,20],[212,10],[232,25]]  # get_all_critical_problems()
-        all_techns_id = self.init_techn_ids()
-        num_of_techns=len(all_techns_id)
-        self.init_empty_schedule(len(all_techns_id))
-        self.init_times(num_of_techns)
+    def problems_schedule(self, type_of_problem):
+        all_problems = self.get_problems_id_time(type_of_problem)
+        num_of_techns=len(self.techns_ids)
         current_techn = 0
-        for problem in all_critical_problems:
+        for problem in all_problems:
             test = 0
-            has_time = True  # hasTime(all_techns_id[current_techn])
+            has_time = True  # hasTime(current_techn, problem[1])
             while not has_time :
                 current_techn = (current_techn + 1)%num_of_techns
                 test += 1
                 if test == num_of_techns:
                     break
-                has_time = True  # hasTime(all_techns_id[current_techn])
+                has_time = True  # hasTime(current_techn, problem[1])
             if has_time:
                 self.schedule[current_techn].append(problem)
+                self.update_time(current_techn, problem[1])
                 current_techn = (current_techn + 1) % num_of_techns
         # save_schedule()
         # report_errors()
 
     def main_schedule(self):
-        self.critical_problems_schedule()
+        #initialize global vars
+        self.init_techn_ids()
+        self.init_empty_schedule(len(self.techns_ids))
+        self.init_times(len(self.techns_ids))
+
+        self.problems_schedule('critical')
+        self.problems_schedule('regular')
+
 
 
 
 s=Scheduling()
-s.critical_problems_schedule()
-print(s.schedule)
+print(s.get_problems_id_time('critical'))
