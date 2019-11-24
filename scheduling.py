@@ -82,3 +82,31 @@ class Scheduling(Techn,Problem):
 
         self.problems_schedule('critical')
         self.problems_schedule('regular')
+
+    def SaveScheduling(self):
+        Cleaning('sheet1') #clear the sheet in scheduling file
+        file=openpyxl.load_workbook('excel_files\\scheduling.xlsx')
+        sheet=file['sheet1']
+        for i in range(len(self.techns_ids)):
+            index = sheet.cell(row=1, column=(i+1))
+            var=self.techns_ids[i]
+            print(self.techns_ids[i])
+            index.value=var
+
+        for j in range(len(self.schedule)):
+           ls=list(self.schedule[j])
+           for k in  range(len(ls)):
+                postion1=sheet.cell(row=(k+2), column=(j+1))
+                postion1.value=ls[k]
+
+        file.save('excel_files\\scheduling.xlsx')
+
+
+    def Cleaning(self,NameOfSheet):
+        file = openpyxl.load_workbook('excel_files\\scheduling.xlsx')
+        sheet = file[NameOfSheet]
+        rows=sheet.max_row
+        sheet.delete_rows(1, amount=rows)
+        file.save('excel_files\\scheduling.xlsx')
+
+
