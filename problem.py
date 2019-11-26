@@ -1,6 +1,6 @@
 import openpyxl
-
-
+import math
+velocity = 30
 class Problem:
 
     # written by Suzan added by Abeer
@@ -27,8 +27,16 @@ class Problem:
         return 0
 
     def get_travel_time(self,client_id):
-
-        return 100
+        clients_file = openpyxl.load_workbook('excel_files\\clients.xlsx')
+        clients = clients_file['clients']
+        c_rows = clients.max_row
+        for i in range(2,c_rows+1):
+            if int(clients.cell(row=i, column=2).value)== int(client_id):
+                location = clients.cell(row=i, column=3).value
+                location = [int(i) for i in location.split(',')]
+                distance = math.sqrt(location[0] ** 2 + location[1] ** 2)
+                return distance//velocity
+        return 0
 
     def get_total_time(self, type_of_problem, description, client_id):
         problem_time = self.get_problem_time(type_of_problem, description)
@@ -47,7 +55,3 @@ class Problem:
             data.append(self.get_total_time(type_of_problem, description, client_id))
             problems.append(data)
         return problems
-
-
-x = Problem()
-print(x.get_total_time('regular','Screen freezes',123456789))
