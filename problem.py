@@ -38,11 +38,8 @@ class Problem:
     def get_list_id_time(self, type_of_problem):
         problems = []
         problems_file = openpyxl.load_workbook('excel_files\\problems.xlsx')
-        problems_types_file = openpyxl.load_workbook('excel_files\\problems_types.xlsx')   #####
         all_problems = problems_file[type_of_problem]
-        problem_types = problems_types_file['types']  #####
         p_rows = all_problems.max_row
-        t_rows = problem_types.max_row  #####
         for i in range(2, p_rows + 1):
             data = [all_problems.cell(row=i, column=1).value]
             description = all_problems.cell(row=i, column=5).value
