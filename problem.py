@@ -55,3 +55,14 @@ class Problem:
             data.append(self.get_total_time(type_of_problem, description, client_id))
             problems.append(data)
         return problems
+
+    def delet_Row(self, problem_id, type):
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
+        sheet = wb[type]
+        rows = sheet.max_row
+        print(rows)
+        for i in range(2, rows + 1):
+            print(sheet.cell(row=i, column=1).value)
+            if (problem_id == str(sheet.cell(row=i, column=1).value)):
+                sheet.delete_rows(i, amount=1)
+        wb.save('excel_files\\problems.xlsx')
