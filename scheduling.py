@@ -17,6 +17,19 @@ class Scheduling(Techn,Problem):
             if (tp_sheet.cell(row=i, column=2).value == name_pm):
                 return tp_sheet.cell(row=i, column=3).value
 
+    def Get_ProblemDetails(self, id_problem, type):
+        st = ""
+        file = openpyxl.load_workbook('excel_files\\problems.xlsx')
+        sheet = file[type]
+        rows = sheet.max_row
+        for i in range(2, rows + 1):
+            if (sheet.cell(row=i, column=1).value == id_problem):
+                st = st + "Description :"
+                des = str(sheet.cell(row=i, column=5).value)
+                st = st + des + "\n" + "Type :" + type + "\n" + "ID Client :"
+                id_client = str(sheet.cell(row=i, column=2).value)
+                return st
+
     def has_time(self, current_techn, time):
         if (480 - (self.times[current_techn]) >= time):
             return True
