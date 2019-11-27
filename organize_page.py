@@ -27,9 +27,6 @@ class organize_app(QMainWindow,Ui_MainWindow,Product, Client,Techn):
         self.push_client.clicked.connect(self.pushClent)
         self.push_tech.clicked.connect(self.pushtech)
 
-
-
-
     def off(self):
         self.groupBox1.hide()
         self.groupBox2.hide()
@@ -40,28 +37,85 @@ class organize_app(QMainWindow,Ui_MainWindow,Product, Client,Techn):
     def addproduct(self):
         self.off()
         self.groupBox2.show()
-        self.groupBox2.setGeometry(400, 20, 281, 221)
+        self.groupBox2.setGeometry(400, 20, 471, 431)
     def addtech(self):
         self.off()
         self.groupBox3.show()
-        self.groupBox3.setGeometry(400, 20, 281, 221)
+        self.groupBox3.setGeometry(400, 20, 471, 431)
+
     def pushproduct(self):
         name=self.product_name.text()
+        tname=self.Checking_Length(name)
+        self.label_nameproduct.setText("The name contains only lower or upper case letters"+"\n"+" and is less than 30 characters long")
+        if(tname==False):
+            self.label_nameproduct.show()
+        else:
+            self.label_nameproduct.hide()
         id_client=self.id_pclient.text()
-        self.add_product(name,id_client)
+        print(id_client)
+        print(tname,self.is_id_exist(id_client))
+        if(self.is_id_exist(id_client)==True and name!=None and id_client !=None):
+            print(name,id_client)
+            self.add_product(name,id_client)
+        else:
+            self.labe_idclient.setText("The client does not exist")
+
     def pushClent(self):
         n=self.client_name.text()
+        testname=self.Checking_Name(n)
+        self.mesge_labelName.setText( "The name contains only lower or upper case letters"+"\n"+" and is less than 30 characters long")
+        self.templetlabellocation.setText( "The location structure contains only two numbers start and end numbers" + "\n" + " and is larger than -1 also in this format" + "\n" + " < number,number>")
+        if(testname==False):
+            self.mesge_labelName.show()
+        else:
+            self.mesge_labelName.hide()
+
         lo=self.client_location.text()
-        print(n,lo)
-        self.add_client_to_excel(n,lo)
+        testlocation=self.Testing_Location(lo)
+        print(n, lo)
+        print(testlocation)
+        print(testname)
+        if(testlocation==False):
+            self.templetlabellocation.show()
+        else:
+            self.templetlabellocation.hide()
+
+        if(testlocation==True and testname==True and lo !=None and n !=None):
+           self.add_client_to_excel(n,lo)
+
+
 
 
 
     def pushtech(self):
         name=self.tech_name.text()
+        self.msagelabel_username.setText("The username contains only 8  characters"+"\n"+"also the first character is letter"+"\n "+"also without any space")
+        self.labelnameof_masgetech.setText("The name contains only lower or upper case letters"+"\n"+" and is less than 30 characters long")
+        testname=self.Checking_Name(name)
+        print(testname)
+        if(testname==False):
+            self.labelnameof_masgetech.show()
+        else:
+            self.labelnameof_masgetech.hide()
         username=self.tech_username.text()
+        testuser=self.Checking_UserName(username)
+        print(testuser)
+        if(testuser==False):
+            self.msagelabel_username.show()
+        else:
+            self.msagelabel_username.hide()
         password=self.tech_pass.text()
-        self.add_tech(name,username,password)
+        testpass=self.Checking_Length(password)
+        print(testpass)
+        if(testname==True and testuser==True and password !=None and name!=None and username !=None ):
+            self.add_tech(name,username,password)
+            print(name,username,password)
+        else:
+            print("no details")
+
+
+
+
 
 
 
