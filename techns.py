@@ -1,24 +1,36 @@
 import random
 import openpyxl
-
+'''
+|Class Techn
+|Used File: techns
+|main functions:
+|1. add_tech
+|   input: name, username, password
+|   output: adding tech to excel file 
+|2. get_all_ids
+|   input: nothing
+|   output: updating techID variable which contains all ids
+|
+'''
 
 class Techn:
+
     techID = list()
-    def gene_tech_id(self):
-        tech_id = random.randrange(100000, 999999)
-        if (self.is_tech_exist(tech_id) is True):
-            self.gene_tech_id()
-        return tech_id
 
     def is_tech_exist(self, tech_id):
         tech_file = openpyxl.load_workbook('excel_files\\techns.xlsx')
         tc_sheet = tech_file['techns']
         rows = tc_sheet.max_row
         for i in range(2, rows + 1):
-            if (tc_sheet.cell(row=i, column=1).value == tech_id):
+            if tc_sheet.cell(row=i, column=1).value == tech_id:
                 return True
         return False
 
+    def gene_tech_id(self):
+        tech_id = random.randrange(100000, 999999)
+        if self.is_tech_exist(tech_id):
+            self.gene_tech_id()
+        return tech_id
 
     def add_tech(self, tech_name, username, pwd):
         wb = openpyxl.load_workbook('excel_files\\techns.xlsx')
