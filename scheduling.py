@@ -116,3 +116,12 @@ class Scheduling(Techn, Problem):
         rows = sheet.max_row
         sheet.delete_rows(1, amount=rows)
         file.save('excel_files\\scheduling.xlsx')
+
+    def GetLocation(self, idclient):
+        clientfile = openpyxl.load_workbook('excel_files\\clients.xlsx')
+        clientsheet = clientfile['clients']
+        row_s = clientsheet.max_row
+        for i in range(2, row_s + 1):
+            if ((clientsheet.cell(row=i, column=2).value) == idclient):
+                location = clientsheet.cell(row=i, column=3).value
+                return location
