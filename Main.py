@@ -21,9 +21,9 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
         QMainWindow.__init__(self)
         Ui_LoginWindow.__init__(self)
         self.setupUi(self)
-        self.btn_login.clicked.connect(self.moveTec)
+        self.btn_login.clicked.connect(self.redirectTo)
 
-    def moveTec(self):
+    def redirectTo(self):
         username_ = self.user_name.text()
         pwd = self.user_pass.text()
         res_client = self.client_login(username_, pwd)
