@@ -8,29 +8,27 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+
+import openpyxl
+from datetime import  date
+import random
+from report_problem import Problem
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(80, 30, 101, 31))
-        self.label_3.setObjectName("label_3")
-        self.id_user = QtWidgets.QLineEdit(self.centralwidget)
-        self.id_user.setGeometry(QtCore.QRect(150, 40, 113, 20))
-        self.id_user.setObjectName("id_user")
-        self.loginB = QtWidgets.QPushButton(self.centralwidget)
-        self.loginB.setGeometry(QtCore.QRect(280, 40, 75, 23))
-        self.loginB.setObjectName("loginB")
-        self.massge_id = QtWidgets.QLabel(self.centralwidget)
-        self.massge_id.setGeometry(QtCore.QRect(180, 70, 151, 16))
-        self.massge_id.setText("")
-        self.massge_id.setObjectName("massge_id")
-        self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(70, 130, 431, 201))
+
+class Ui_Dialog_Client(object):
+    def __init__(self, id_client):
+
+        self.id_client = id_client
+
+    def setupUi(self, Dialog_Client):
+        Dialog_Client.setObjectName("Dialog_Client")
+        Dialog_Client.resize(885, 857)
+        self.groupBox = QtWidgets.QGroupBox(Dialog_Client)
+        self.groupBox.hide()
+        self.groupBox.setEnabled(True)
+        self.groupBox.setGeometry(QtCore.QRect(10, 140, 431, 201))
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.label = QtWidgets.QLabel(self.groupBox)
@@ -48,23 +46,28 @@ class Ui_MainWindow(object):
         self.send = QtWidgets.QPushButton(self.groupBox)
         self.send.setGeometry(QtCore.QRect(300, 160, 75, 23))
         self.send.setObjectName("send")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
-        self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.groupBox_2 = QtWidgets.QGroupBox(Dialog_Client)
+        self.groupBox_2.hide()
+        self.groupBox_2.setGeometry(QtCore.QRect(10, 20, 501, 71))
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.display = QtWidgets.QPushButton(self.groupBox_2)
+        self.display.setGeometry(QtCore.QRect(130, 20, 181, 41))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.display.setFont(font)
+        self.display.setObjectName("display")
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(Dialog_Client)
+        QtCore.QMetaObject.connectSlotsByName(Dialog_Client)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("MainWindow", "username :", None, -1))
-        self.loginB.setText(QtWidgets.QApplication.translate("MainWindow", "GO", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("MainWindow", "products :", None, -1))
-        self.label_2.setText(QtWidgets.QApplication.translate("MainWindow", "Problem :", None, -1))
-        self.send.setText(QtWidgets.QApplication.translate("MainWindow", "send", None, -1))
+    def retranslateUi(self, Dialog_Client):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog_Client.setWindowTitle(_translate("Dialog_Client", "Dialog"))
+        self.label.setText(_translate("Dialog_Client", "products :"))
+        self.label_2.setText(_translate("Dialog_Client", "Problem :"))
+        self.send.setText(_translate("Dialog_Client", "send"))
+        self.groupBox_2.setTitle(_translate("Dialog_Client", "GroupBox"))
+        self.display.setText(_translate("Dialog_Client", "Report Problem"))
+
+
 
