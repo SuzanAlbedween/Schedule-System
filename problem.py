@@ -52,7 +52,7 @@ class Problem:
                 location = clients.cell(row=i, column=3).value
                 location = [int(i) for i in location.split(',')]
                 distance = math.sqrt(location[0] ** 2 + location[1] ** 2)
-                return distance//velocity
+                return int(distance//velocity)
         return 0
 
     def get_total_time(self, description, client_id):

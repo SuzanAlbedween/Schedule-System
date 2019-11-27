@@ -11,7 +11,7 @@ class Client:
         for i in range(2,row_s+1):
             if((clientsheet.cell(row=i,column=2).value)==(client_id)):
                 return True
-            return False
+        return False
 
     def client_random_id(self):
         client_id=random.randrange(1000,99999)
