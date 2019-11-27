@@ -10,7 +10,6 @@ import openpyxl
 |2. get_all_ids
 |   input: nothing
 |   output: updating techID variable which contains all ids
-|
 '''
 
 class Techn:
