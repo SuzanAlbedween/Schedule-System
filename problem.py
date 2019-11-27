@@ -43,12 +43,12 @@ class Problem:
                 return problem_types.cell(row=j, column=3).value
         return 0
 
-    def get_travel_time(self,client_id):
+    def get_travel_time(self, client_id):
         clients_file = openpyxl.load_workbook('excel_files\\clients.xlsx')
         clients = clients_file['clients']
         c_rows = clients.max_row
-        for i in range(2,c_rows+1):
-            if int(clients.cell(row=i, column=2).value)== int(client_id):
+        for i in range(2, c_rows+1):
+            if int(clients.cell(row=i, column=2).value) == int(client_id):
                 location = clients.cell(row=i, column=3).value
                 location = [int(i) for i in location.split(',')]
                 distance = math.sqrt(location[0] ** 2 + location[1] ** 2)
@@ -73,7 +73,7 @@ class Problem:
             problems.append(data)
         return problems
 
-    def add_to_regular(self,problem_id, client_id, product_id, report_date, description):
+    def add_to_regular(self, problem_id, client_id, product_id, report_date, description):
         problems_file = openpyxl.load_workbook('excel_files\\problems.xlsx')
         all_problems = problems_file['regular']
         p_row = all_problems.max_row

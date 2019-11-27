@@ -54,7 +54,7 @@ class Techn:
         if (len(name) != 8):
             return False
         else:
-            if (name.isspace() == True):
+            if name.isspace() == True:
                 return False
             else:
                 if (name[0].isalpha() == False):
