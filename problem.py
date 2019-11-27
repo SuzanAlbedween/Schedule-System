@@ -48,7 +48,7 @@ class Problem:
         clients = clients_file['clients']
         c_rows = clients.max_row
         for i in range(2, c_rows+1):
-            if int(clients.cell(row=i, column=2).value) == int(client_id):
+            if str(clients.cell(row=i, column=2).value) == str(client_id):
                 location = clients.cell(row=i, column=3).value
                 location = [int(i) for i in location.split(',')]
                 distance = math.sqrt(location[0] ** 2 + location[1] ** 2)
@@ -113,4 +113,39 @@ class Problem:
                 self.add_to_regular(problem_id, client_id, product_id, report_date, description)
                 break
         self.delete_Row(problem_id, 'critical')
+    def TestType(self,id,type):
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
+        sheet = wb[type]
+        rows = sheet.max_row
+        for i in range(2,rows+1):
+            if(id==str(sheet.cell(row=i, column=1).value)):
+                return True
+        return False
+
+
+    def Type_Of_Problem(self,id):
+        testR=self.TestType(str(id),'regular')
+        if(testR==True):
+            return 'regular'
+        else:
+            return 'critical'
+    def Getdescription(self,id,type):
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
+        sheet = wb[type]
+        rows = sheet.max_row
+        for i in range(2,rows+1):
+            if (str(id) == str(sheet.cell(row=i, column=1).value)):
+                return (sheet.cell(row=i, column=5).value)
+
+    def GetClientID(self,id,type):
+        wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
+        sheet = wb[type]
+        rows = sheet.max_row
+        for i in range(2, rows + 1):
+            if (str(id) == str(sheet.cell(row=i, column=1).value)):
+                return (sheet.cell(row=i, column=2).value)
+
+
+
+
 
