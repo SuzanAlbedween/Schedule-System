@@ -3,18 +3,18 @@
 # Form implementation generated from reading ui file 'renovationGUI.ui',
 # licensing of 'renovationGUI.ui' applies.
 #
-# Created: Mon Nov 25 17:03:20 2019
+# Created: Wed Nov 27 16:25:47 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(640, 600)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_tech_window(object):
+    def setupUi(self, tech_window):
+        tech_window.setObjectName("tech_window")
+        tech_window.resize(640, 600)
+        self.centralwidget = QtWidgets.QWidget(tech_window)
         self.centralwidget.setObjectName("centralwidget")
         self.renovation_button_tech = QtWidgets.QPushButton(self.centralwidget)
         self.renovation_button_tech.setGeometry(QtCore.QRect(170, 450, 101, 41))
@@ -42,23 +42,23 @@ class Ui_MainWindow(object):
         self.id_techlabel = QtWidgets.QLabel(self.centralwidget)
         self.id_techlabel.setGeometry(QtCore.QRect(80, 60, 71, 21))
         self.id_techlabel.setObjectName("id_techlabel")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        tech_window.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(tech_window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 21))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        tech_window.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(tech_window)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        tech_window.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(tech_window)
+        QtCore.QMetaObject.connectSlotsByName(tech_window)
 
-    def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MainWindow", None, -1))
-        self.renovation_button_tech.setText(QtWidgets.QApplication.translate("MainWindow", "Rennovation", None, -1))
-        self.label.setText(QtWidgets.QApplication.translate("MainWindow", "Welcome  ", None, -1))
-        self.nametech_label.setText(QtWidgets.QApplication.translate("MainWindow", "T", None, -1))
-        self.label_3.setText(QtWidgets.QApplication.translate("MainWindow", "ID :", None, -1))
-        self.id_techlabel.setText(QtWidgets.QApplication.translate("MainWindow", "id", None, -1))
+    def retranslateUi(self, tech_window):
+        tech_window.setWindowTitle(QtWidgets.QApplication.translate("tech_window", "MainWindow", None, -1))
+        self.renovation_button_tech.setText(QtWidgets.QApplication.translate("tech_window", "Rennovation", None, -1))
+        self.label.setText(QtWidgets.QApplication.translate("tech_window", "Welcome  ", None, -1))
+        self.nametech_label.setText(QtWidgets.QApplication.translate("tech_window", "T", None, -1))
+        self.label_3.setText(QtWidgets.QApplication.translate("tech_window", "ID :", None, -1))
+        self.id_techlabel.setText(QtWidgets.QApplication.translate("tech_window", "id", None, -1))
 
