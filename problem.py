@@ -62,23 +62,26 @@ class Problem:
         all_problems = problems_file['regular']
         p_row = all_problems.max_row
         for i in range(2, p_row + 1):
-            if all_problems['D'+str(i)].value.date() > report_date:
-                all_problems.insert_rows(idx=i-1, amount=1)
+            if all_problems['D'+str(i)].value > report_date:
+                all_problems.insert_rows(idx=i, amount=1)
+                print(all_problems.cell(row=i, column=1).value)
                 all_problems.cell(row=i, column=1).value = problem_id
                 all_problems.cell(row=i, column=2).value = client_id
                 all_problems.cell(row=i, column=3).value = product_id
-                all_problems.cell(row=i, column=4).value = report_date
+                all_problems.cell(row=i, column=4).value = report_date.date()
                 all_problems.cell(row=i, column=5).value = description
+                print(all_problems.cell(row=i, column=1).value)
+                problems_file.save('excel_files\\problems.xlsx')
                 break
-        problems_file.save('excel_files\\problems.xlsx')
 
     def delet_Row(self, problem_id, type_of_problem):
         wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
         sheet = wb[type_of_problem]
         rows = sheet.max_row
         for i in range(2, rows + 1):
-            if (problem_id == str(sheet.cell(row=i, column=1).value)):
+            if (str(problem_id ) == str(sheet.cell(row=i, column=1).value)):
                 sheet.delete_rows(i, amount=1)
+                break
         wb.save('excel_files\\problems.xlsx')
 
     def move_critical_to_regular(self,problem_id):
@@ -93,8 +96,5 @@ class Problem:
                 description = all_problems.cell(row=i,column=5).value
                 self.add_to_regular(problem_id, client_id, product_id, report_date, description)
                 break
-        problems_file.save('excel_files\\problems.xlsx')
         self.delet_Row(problem_id, 'critical')
 
-p = Problem()
-print(p.move_critical_to_regular(1111))
