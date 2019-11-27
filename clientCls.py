@@ -32,3 +32,36 @@ class Client:
         client_sheet['C'+str(maxrow+1)]=client_location
         client_file.save('excel_files\\clients.xlsx')
 
+    def Checking_Length(self, temp):
+        if (len(temp) < 30):
+            return True
+        else:
+            return False
+
+    def Checking_Name(self, name):
+        # The isalpha() method returns True if all characters in the string are alphabets.
+        # If not, it returns False.
+        if (name.isalpha() == True and self.Checking_Length(name) == True):
+            return True
+        else:
+            return False
+
+    def Testing_Location(self, location):
+        isfind = location.find(',')
+        if (isfind != -1):
+            arry = location.split(',')
+            print(arry)
+            # The isnumeric() method returns True if all characters in a string are numeric characters.
+            # If not, it returns False.
+            if (len(arry) == 2):
+                if ((arry[0].isdecimal() == True and arry[0] >= '0') and (
+                        arry[1].isdecimal() == True and arry[1] >= '0')):
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        return False
+
+
+
