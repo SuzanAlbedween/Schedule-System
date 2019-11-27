@@ -116,6 +116,3 @@ class Scheduling(Techn, Problem):
         rows = sheet.max_row
         sheet.delete_rows(1, amount=rows)
         file.save('excel_files\\scheduling.xlsx')
-
-
-
