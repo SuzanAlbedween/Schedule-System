@@ -26,6 +26,29 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
 
 
 
+    # Authintication methods
+    def client_login(self,name,pwdId):
+        clientfile = openpyxl.load_workbook('excel_files\\clients.xlsx')
+        clientsheet = clientfile['clients']
+        row_s = clientsheet.max_row
+        for i in range(2, row_s + 1):
+            if (str(clientsheet.cell(row=i, column=2).value) == str(pwdId) and clientsheet.cell(row=i, column=1).value == name):
+                return 1
+        return 0
+
+    def techn_login(self,username, pwd):
+        tech_file = openpyxl.load_workbook('excel_files\\techns.xlsx')
+        tc_sheet = tech_file['techns']
+        rows = tc_sheet.max_row
+        for i in range(2, rows + 1):
+            if (str(tc_sheet.cell(row=i, column=3).value) == str(username) and  str(tc_sheet.cell(row=i,column=4).value) == str(pwd)):
+                return 1
+        return 0
+
+    def admin_login(self, username,pwd):
+        if(username=="admin" and pwd=="0123456"):
+            return 1
+        return 0
 #Client page methods:
     def report_p(self):
         id_client=self.user_pass.text()
