@@ -1,8 +1,24 @@
 import openpyxl
 import math
 from datetime import datetime
-
 velocity = 30
+
+'''
+|Problem class
+|Files used: problems, problems types, clients
+|main functions: 
+|1. get_list_id_time 
+|   input: type of problems
+|   output: list of tiny lists [problem id, problem time]
+|2. move_critical_to_regular
+|   input: problem id
+|   output: problem moved from critical problems sheet to regular problems sheet
+|3. delete_Row
+|   input: problem id, problem type
+|   output: deleting problem from the file
+'''
+
+
 class Problem:
 
     # written by Suzan added by Abeer
@@ -74,12 +90,12 @@ class Problem:
                 problems_file.save('excel_files\\problems.xlsx')
                 break
 
-    def delet_Row(self, problem_id, type_of_problem):
+    def delete_Row(self, problem_id, type_of_problem):
         wb = openpyxl.load_workbook('excel_files\\problems.xlsx')
         sheet = wb[type_of_problem]
         rows = sheet.max_row
         for i in range(2, rows + 1):
-            if (str(problem_id ) == str(sheet.cell(row=i, column=1).value)):
+            if str(problem_id) == str(sheet.cell(row=i, column=1).value):
                 sheet.delete_rows(i, amount=1)
                 break
         wb.save('excel_files\\problems.xlsx')
@@ -96,5 +112,5 @@ class Problem:
                 description = all_problems.cell(row=i,column=5).value
                 self.add_to_regular(problem_id, client_id, product_id, report_date, description)
                 break
-        self.delet_Row(problem_id, 'critical')
+        self.delete_Row(problem_id, 'critical')
 
