@@ -25,16 +25,19 @@ from scheduling import Scheduling
 from renovationGUI import Ui_tech_window
 
 
-class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Ui_tech_window,Techn,Product,Client):
+class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Techn,Product,Client):
 
     def __init__(self):
         Problem.__init__(self)
         Product.__init__(self)
         Client.__init__(self)
         Techn.__init__(self)
+        self.Scheduling = Scheduling()
+        Scheduling.__init__(self)
         QMainWindow.__init__(self)
         Ui_LoginWindow.__init__(self)
         self.setupUi(self)
+        
         self.setFixedSize(670, 570)  # sizeofwindow
         # *****************************add image****************
 
@@ -200,83 +203,76 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         self.add_tech(name, username, password)
 
     #Techn methods:
-
     def CreatTabel(self):
-       Names=["ID Scheduling","Details","Time","Location","Status"]
-       for i in range(len(Names)):
-           item = QTableWidgetItem()
-           item.setText(Names[i])
-           self.table_tech.setHorizontalHeaderItem(i, item)
+        Names = ["ID Scheduling", "Details", "Time", "Location", "Status"]
+        for i in range(len(Names)):
+            item = QTableWidgetItem()
+            item.setText(Names[i])
+            self.ui.table_tech.setHorizontalHeaderItem(i, item)
+            self.ui.table_tech.hide()
 
-
-    def Load_Renovation_PerOneTechn(self,index_tech):
+    def Load_Renovation_PerOneTechn(self, index_tech):
         file = openpyxl.load_workbook('excel_files\\scheduling.xlsx')
         sheet = file['sheet1']
         rows = sheet.max_row
-        self.id_techlabel.setText(str(sheet.cell(row=1, column=index_tech).value))
-        #name=self.Get_TechName(sheet.cell(row=1, column=index_tech).value)
-        #print(name)
-        #self.nametech_label.setText(name)
+        self.ui.id_techlabel.setText(str(sheet.cell(row=1, column=index_tech).value))
+        # name=self.Get_TechName(sheet.cell(row=1, column=index_tech).value)
+        # print(name)
+        # self.nametech_label.setText(name)
         for i in range(rows):
-            idproblem =sheet.cell(row=2 + i, column=index_tech).value
-            self.table_tech.setItem(i, 0, QTableWidgetItem(str(idproblem)))
-            type=self.Type_Of_Problem(idproblem)
-           # print(type)
-            details=self.Get_ProblemDetails(idproblem,type)
-            self.table_tech.setItem(i, 1, QTableWidgetItem(details)) # problemdetails
-            #data=self.Getdescription_GetClientID(idproblem,type)
-            description=self.Getdescription(idproblem,type)
-            Cid=self.GetClientID(idproblem,type)
-            totaltime=self.get_total_time(description,Cid)
-            self.table_tech.setItem(i, 2, QTableWidgetItem(str(totaltime)))
-            location=self.GetLocation(Cid)
-            self.table_tech.setItem(i, 3, QTableWidgetItem(location))
+            idproblem = sheet.cell(row=2 + i, column=index_tech).value
+            self.ui.table_tech.setItem(i, 0, QTableWidgetItem(str(idproblem)))
+            type = self.Type_Of_Problem(idproblem)
+            # print(type)
+            details = self.Scheduling.Get_ProblemDetails(idproblem, type)
+
+            self.ui.table_tech.setItem(i, 1, QTableWidgetItem(details))  # problemdetails
+
+            # data=self.Getdescription_GetClientID(idproblem,type)
+            description = self.Getdescription(idproblem, type)
+            Cid = self.GetClientID(idproblem, type)
+            totaltime = self.get_total_time(description, Cid)
+            self.ui.table_tech.setItem(i, 2, QTableWidgetItem(str(totaltime)))
+            location = self.Scheduling.GetLocation(Cid)
+            self.ui.table_tech.setItem(i, 3, QTableWidgetItem(location))
             combo = QComboBox()
 
-            if(type=='critical'):
+            if (type == 'critical'):
 
                 combo.addItem("None")
                 combo.addItem("Done")
                 combo.addItem("Convert To Regular")
 
             else:
-                if(type=='regular'):
-                 combo.addItem("None")
-                 combo.addItem("Done")
-
-
+                if (type == 'regular'):
+                    combo.addItem("None")
+                    combo.addItem("Done")
 
             combo.currentTextChanged.connect(self.Select_Status)
-            self.table_tech.setCellWidget(i, 4,combo)
 
+            self.ui.table_tech.setCellWidget(i, 4, combo)
+            # self.ui.table_tech.show(index_tech)
 
-
-           # choice_status=self.table_tech.g
+        # choice_status=self.table_tech.g
 
     def Select_Status(self):
-        cols=self.table_tech.rowCount()
+        cols = self.table_tech.rowCount()
         for row in range(cols):
-            w=self.table_tech.cellWidget(row,4)
-            if isinstance(w,  QComboBox):
-                #current_value = w.currentText()
-                if (str(w.currentText())=="Done"):
+            w = self.table_tech.cellWidget(row, 4)
+            if isinstance(w, QComboBox):
+                # current_value = w.currentText()
+                if (str(w.currentText()) == "Done"):
                     ppr = self.table_tech.item(row, 0).text()
                     print(ppr)
-                    type =str(self.Type_Of_Problem(ppr))
+                    type = str(self.ype_Of_Problem(ppr))
                     print(type)
                     self.delete_Row(ppr, type)
                     break
                 if (str(w.currentText()) == "Convert To Regular"):
-                    indx=self.table_tech.item(row, 0).text()
+                    indx = self.table_tech.item(row, 0).text()
                     print(indx)
                     self.move_critical_to_regular(indx)
                     break
-
-
-
-
-
-
 
 
 if __name__=="__main__":
