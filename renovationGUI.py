@@ -11,6 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_tech_window(object):
+    def __init__(self, id_techn):
+        self.id_techn = id_techn
+        
     def setupUi(self, tech_window):
         tech_window.setObjectName("tech_window")
         tech_window.resize(640, 600)
