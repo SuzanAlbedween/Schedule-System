@@ -1,15 +1,25 @@
 import sys
 import openpyxl
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5 import  QtGui,QtCore
 from PyQt5.QtCore import *
 from login_forum import Ui_LoginWindow
 from reportG import Ui_Dialog_Client
+from clientCls import Client
+from PyQt5.QtWidgets import QApplication
+import PyQt5.uic as  uic
+import os
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import *
+from PyQt5 import  QtGui,QtCore
+from PyQt5.QtCore import *
+from login_forum import Ui_LoginWindow
 from report_problem import Problem
 from product import Product
-from clientCls import Client
 from techns import Techn
+
+
 
 class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Product):
 
@@ -23,12 +33,27 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
         self.setupUi(self)
         self.btn_login.clicked.connect(self.redirectTo)
 
+
     def redirectTo(self):
         username_ = self.user_name.text()
         pwd = self.user_pass.text()
         res_client = self.client_login(username_, pwd)
         res_tech = self.techn_login(username_, pwd)
         res_admin = self.admin_login(username_,pwd)
+
+
+        if(res_client == 1):
+
+            self.clientWindow = QtWidgets.QMainWindow()
+            self.id_client = self.user_pass.text()
+            self.ui = Ui_Dialog_Client(self.id_client)
+            self.ui.setupUi(self.clientWindow)
+            self.hide()
+            self.clientWindow.show()
+
+            self.ui.report_p()
+
+            self.ui.send.clicked.connect(self.send_data)
 
 
 
@@ -61,8 +86,8 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
 #Client page methods:
     def report_p(self):
         id_client=self.user_pass.text()
-        proud_lst=list(self.get_client_product)
-        prob_lst=list(self.get_problems_types)
+        proud_lst=list(self.get_client_product())
+        prob_lst=list(self.get_problems_types())
         for i in proud_lst:
             self.list_product.addItem(i[1])
         for j in prob_lst:
@@ -71,10 +96,6 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
         self.list_product.currentTextChanged.connect(self.select_product)
         self.lis_problem.currentTextChanged.connect(self.select_problem)
 
-    def lstProb_(self):
-        prob_lst = list(self.get_problems_types)
-        for j in prob_lst:
-            self.lis_problem.addItem(j)
 
     def select_product(self):
         choice_product=self.list_product.currentText()
