@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import  QtGui,QtCore
 from PyQt5.QtCore import *
 from login_forum import Ui_LoginWindow
-from report_problem import Problem
+from problem import Problem
 from product import Product
 from techns import Techn
 from scheduling import Scheduling
@@ -37,7 +37,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         QMainWindow.__init__(self)
         Ui_LoginWindow.__init__(self)
         self.setupUi(self)
-        
+
         self.setFixedSize(670, 570)  # sizeofwindow
         # *****************************add image****************
 
@@ -71,6 +71,19 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
             self.ui.report_p()
 
             self.ui.send.clicked.connect(self.send_data)
+
+        elif (res_tech == 1):
+
+            QMainWindow.__init__(self)
+            self.id_techn = self.user_pass.text()
+            self.technWindow = QtWidgets.QMainWindow()
+            self.ui = Ui_tech_window(self.id_techn)
+            self.ui.setupUi(self.technWindow)
+            self.technWindow.show()
+            #self.ui.table_tech.hide()
+            self.CreatTabel()
+            self.Load_Renovation_PerOneTechn(2)
+            self.ui.table_tech.show()
 
         elif (res_admin == 1):
             QMainWindow.__init__(self)
@@ -215,12 +228,12 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         file = openpyxl.load_workbook('excel_files\\scheduling.xlsx')
         sheet = file['sheet1']
         rows = sheet.max_row
-        self.ui.id_techlabel.setText(str(sheet.cell(row=1, column=index_tech).value))
+        self.ui.id_techlabel.setText(str(sheet.cell(row=1, column=int(index_tech)).value))
         # name=self.Get_TechName(sheet.cell(row=1, column=index_tech).value)
         # print(name)
         # self.nametech_label.setText(name)
         for i in range(rows):
-            idproblem = sheet.cell(row=2 + i, column=index_tech).value
+            idproblem = sheet.cell(row=2 + i, column=int(index_tech)).value
             self.ui.table_tech.setItem(i, 0, QTableWidgetItem(str(idproblem)))
             type = self.Type_Of_Problem(idproblem)
             # print(type)
