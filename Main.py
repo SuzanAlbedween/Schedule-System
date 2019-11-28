@@ -51,6 +51,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         self.btn_login.clicked.connect(self.redirectTo)
 
 
+
     def redirectTo(self):
         username_ = self.user_name.text()
         pwd = self.user_pass.text()
@@ -202,21 +203,53 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
 
     def pushproduct(self):
         name = self.ui.product_name.text()
+        testname=self.Checking_Name(name)
+        if(testname==False):
+            self.showdialog("The name contains only lower or upper case letters"+"\n"+" and is less than 30 characters long")
         id_client = self.ui.id_pclient.text()
+        testid=self.is_id_exist(id_client)
+        if(testid==False):
+            self.showdialog("The client does not exist")
         self.add_product(name, id_client)
 
     def pushClient(self):
         n = self.ui.client_name.text()
+        tname=self.Checking_Name(n)
+        if(tname==False):
+            self.showdialog("The name contains only lower or upper case letters" + "\n" + " and is less than 30 characters long")
         lo = self.ui.client_location.text()
-        print(n, lo)
+        tlocation=self.Testing_Location(lo)
+        if(tlocation==False):
+            self.showdialog("The location structure contains only two numbers start and end numbers" + "\n" + " and is larger than -1 also in this format" + "\n" + " < number,number>")
         self.add_client_to_excel(n,lo)
+
+
+
+    def showdialog(self,meg):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+
+        msg.setText(meg)
+        retval = msg.exec_()
+        print("value of pressed message box button:", retval)
+
+
         # self.add_client_to_excel(name,loc)
         # self.add_client_to_excel(name,loc)
 
     def pushtech(self):
         name = self.ui.tech_name.text()
+        ttname=self.Checking_Name(name)
+        if(ttname==False):
+            self.showdialog("The name contains only lower or upper case letters" + "\n" + " and is less than 30 characters long")
         username = self.ui.tech_username.text()
+        tusern=self.Checking_UserName(username)
+        if(tusern==False):
+            self.showdialog("The username contains only 8  characters"+"\n"+"also the first character is letter"+"\n "+"also without any space")
         password = self.ui.tech_pass.text()
+        tpwd=self.Checking_Length(password)
+        if(tpwd==False):
+            self.showdialog(tpwd)
         self.add_tech(name, username, password)
 
     #Techn methods:
