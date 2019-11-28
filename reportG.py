@@ -71,3 +71,53 @@ class Ui_Dialog_Client(object):
 
 
 
+    def report_p(self):
+
+        proud_lst = list(self.get_client_product())
+        prob_lst = list(self.get_problems_types())
+        for i in proud_lst:
+            self.list_product.addItem(i[1])
+        for j in prob_lst:
+            self.lis_problem.addItem(j)
+        self.groupBox.show()
+        self.list_product.currentTextChanged.connect(self.select_product)
+        self.lis_problem.currentTextChanged.connect(self.select_problem)
+
+    def select_product(self):
+        choice_product = self.list_product.currentText()
+        return choice_product
+
+        # choice_product=self.list_product.currentText()
+
+    def select_problem(self):
+        choice_problem = self.lis_problem.currentText()
+        return choice_problem
+
+    def get_problems_types(self):
+        lsproblems = []
+        f = openpyxl.load_workbook('excel_files\\problems_types.xlsx')
+        sheet1 = f['types']
+        row = sheet1.max_row + 1
+        for i in range(2, row):
+            lsproblems.append(sheet1.cell(row=i, column=2).value)
+        return lsproblems
+
+    def get_client_product(self):
+        ans = []
+        wb = openpyxl.load_workbook('excel_files\\products.xlsx')
+        sheet1 = wb['products']
+        for i in range(2, sheet1.max_column + 1):
+            if (str(sheet1.cell(row=i, column=3).value) == str(self.id_client)):
+                ans.append((sheet1.cell(row=i, column=1).value, sheet1.cell(row=i, column=2).value))
+        return ans
+
+    def send_data(self):
+        id = self.id_user.text()
+        ch_product = self.select_product()
+        ch_problem = self.select_problem()
+        Problem.add_problem_to_file(ch_product, id, ch_problem)
+        print(id, ch_problem, ch_product)
+
+
+
+
