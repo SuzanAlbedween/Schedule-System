@@ -7,6 +7,7 @@ from PyQt5.QtCore import *
 from login_forum import Ui_LoginWindow
 from reportG import Ui_Dialog_Client
 from clientCls import Client
+from OrganizedGUI import Ui_Dialog_Admin
 from PyQt5.QtWidgets import QApplication
 import PyQt5.uic as  uic
 import os
@@ -21,7 +22,7 @@ from techns import Techn
 
 
 
-class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Product):
+class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Techn,Product,Client):
 
     def __init__(self):
         Problem.__init__(self)
@@ -54,6 +55,23 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
             self.ui.report_p()
 
             self.ui.send.clicked.connect(self.send_data)
+
+        elif (res_admin == 1):
+            QMainWindow.__init__(self)
+            Ui_Dialog_Admin.__init__(self)
+
+            self.adminWindow = QtWidgets.QMainWindow()
+            self.ui = Ui_Dialog_Admin()
+            self.ui.setupUi_(self.adminWindow)
+            self.hide()
+            self.adminWindow.show()
+            self.off()
+            self.ui.add_clientB.clicked.connect(self.addclient)
+            self.ui.add_productB.clicked.connect(self.addproduct)
+            self.ui.add_techB.clicked.connect(self.addtech)
+            self.ui.push_product.clicked.connect(self.pushproduct)
+            self.ui.push_client.clicked.connect(self.pushClient)
+            self.ui.push_tech.clicked.connect(self.pushtech)
 
 
 
@@ -154,7 +172,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
         id_client = self.ui.id_pclient.text()
         self.add_product(name, id_client)
 
-    def pushClent(self):
+    def pushClient(self):
         n = self.ui.client_name.text()
         lo = self.ui.client_location.text()
         print(n, lo)
