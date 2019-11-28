@@ -129,6 +129,45 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Techn,Produ
                 ans.append((sheet1.cell(row=i, column=1).value, sheet1.cell(row=i, column=2).value))
         return ans
 
+    #Admin page methods:
+    def off(self):
+        self.ui.groupBox1.hide()
+        self.ui.groupBox2.hide()
+        self.ui.groupBox3.hide()
+
+    def addclient(self):
+        self.off()
+        self.ui.groupBox1.show()
+
+    def addproduct(self):
+        self.off()
+        self.ui.groupBox2.show()
+        self.ui.groupBox2.setGeometry(400, 20, 281, 221)
+
+    def addtech(self):
+        self.off()
+        self.ui.groupBox3.show()
+        self.ui.groupBox3.setGeometry(400, 20, 281, 221)
+
+    def pushproduct(self):
+        name = self.ui.product_name.text()
+        id_client = self.ui.id_pclient.text()
+        self.add_product(name, id_client)
+
+    def pushClent(self):
+        n = self.ui.client_name.text()
+        lo = self.ui.client_location.text()
+        print(n, lo)
+        self.add_client_to_excel(n,lo)
+        # self.add_client_to_excel(name,loc)
+        # self.add_client_to_excel(name,loc)
+
+    def pushtech(self):
+        name = self.ui.tech_name.text()
+        username = self.ui.tech_username.text()
+        password = self.ui.tech_pass.text()
+        self.add_tech(name, username, password)
+
 
 
 
