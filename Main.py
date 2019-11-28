@@ -82,7 +82,11 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
             self.technWindow.show()
             #self.ui.table_tech.hide()
             self.CreatTabel()
-            self.Load_Renovation_PerOneTechn(2)
+            Id=self.ReturnIDTech(username_,pwd)
+            index=self.ReturnIndexTech(Id)
+
+            print(index)
+            self.Load_Renovation_PerOneTechn(int(index))
             self.ui.table_tech.show()
 
         elif (res_admin == 1):
