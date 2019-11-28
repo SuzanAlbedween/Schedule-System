@@ -30,7 +30,7 @@ class RProblem:
         ans = []
         wb = openpyxl.load_workbook('excel_files\\products.xlsx')
         sheet1 = wb.get_sheet_by_name('products')
-        for i in range(2, sheet1.max_column + 1):
+        for i in range(2, sheet1.max_row + 1):
             if sheet1.cell(row=i, column=3).value == client_id:
                 ans.append((sheet1.cell(row=i, column=1).value, sheet1.cell(row=i, column=2).value))
         return ans

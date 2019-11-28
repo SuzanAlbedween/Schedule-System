@@ -11,11 +11,11 @@ from OrganizedGUI import Ui_Dialog_Admin
 from PyQt5.QtGui import QImage, QPalette, QBrush
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QApplication
-import PyQt5.uic as  uic
+import PyQt5.uic as uic
 import os
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import *
-from PyQt5 import  QtGui,QtCore
+from PyQt5 import QtGui,QtCore
 from PyQt5.QtCore import *
 from login_forum import Ui_LoginWindow
 from problem import Problem
@@ -23,14 +23,16 @@ from product import Product
 from techns import Techn
 from scheduling import Scheduling
 from renovationGUI import Ui_tech_window
+from report_problem import RProblem
 
 
-class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Techn,Product,Client):
+class main_login(QMainWindow,Ui_LoginWindow,Ui_Dialog_Client,Ui_Dialog_Admin,Techn,Product,Client,RProblem):
 
     def __init__(self):
         Problem.__init__(self)
         Product.__init__(self)
         Client.__init__(self)
+        RProblem.__init__(self)
         Techn.__init__(self)
         self.Scheduling = Scheduling()
         Scheduling.__init__(self)
@@ -68,9 +70,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
             self.ui.setupUi(self.clientWindow)
             self.hide()
             self.clientWindow.show()
-
             self.ui.report_p()
-
             self.ui.send.clicked.connect(self.send_data)
 
         elif (res_tech == 1):
@@ -136,8 +136,9 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
             return 1
         return 0
 #Client page methods:
+
     def report_p(self):
-        id_client=self.user_pass.text()
+        id_client = self.user_pass.text()
         proud_lst=list(self.get_client_product())
         prob_lst=list(self.get_problems_types())
         for i in proud_lst:
@@ -160,7 +161,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         id_client = self.id_client
         ch_product=self.ui.select_product()
         ch_problem=self.ui.select_problem()
-        self.add_problem_to_file(ch_product,id_client,ch_problem)
+        self.add_problem_to_file(ch_product,int(id_client),ch_problem)
         print(id_client,ch_problem,ch_product)
         #self.add_problem_to_file(choice_product,id_client,choice_problem)
     def get_problems_types(self):
@@ -168,6 +169,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         f=openpyxl.load_workbook('excel_files\\problems_types.xlsx')
         sheet1 = f['types']
         row = sheet1.max_row + 1
+        print(row)
         for i in range(2,row):
             lsproblems.append(sheet1.cell(row=i, column=2).value)
         return lsproblems
@@ -176,7 +178,7 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         ans = []
         wb = openpyxl.load_workbook('excel_files\\products.xlsx')
         sheet1 = wb['products']
-        for i in range(2, sheet1.max_column + 1):
+        for i in range(2, sheet1.max_row + 1):
             if (str(sheet1.cell(row=i, column=3).value) == str(self.id_client)):
                 ans.append((sheet1.cell(row=i, column=1).value, sheet1.cell(row=i, column=2).value))
         return ans
@@ -330,3 +332,5 @@ if __name__=="__main__":
     window=main_login()
     window.show()
     sys.exit(app.exec_())
+
+

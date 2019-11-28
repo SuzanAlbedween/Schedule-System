@@ -12,7 +12,7 @@
 import openpyxl
 from datetime import  date
 import random
-from report_problem import Problem
+from report_problem import RProblem
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -106,7 +106,7 @@ class Ui_Dialog_Client(object):
         ans = []
         wb = openpyxl.load_workbook('excel_files\\products.xlsx')
         sheet1 = wb['products']
-        for i in range(2, sheet1.max_column + 1):
+        for i in range(2, sheet1.max_row + 1):
             if (str(sheet1.cell(row=i, column=3).value) == str(self.id_client)):
                 ans.append((sheet1.cell(row=i, column=1).value, sheet1.cell(row=i, column=2).value))
         return ans
@@ -115,7 +115,7 @@ class Ui_Dialog_Client(object):
         id = self.id_user.text()
         ch_product = self.select_product()
         ch_problem = self.select_problem()
-        Problem.add_problem_to_file(ch_product, id, ch_problem)
+        RProblem.add_problem_to_file(ch_product, id, ch_problem)
         print(id, ch_problem, ch_product)
 
 
