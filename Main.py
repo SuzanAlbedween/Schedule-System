@@ -8,6 +8,8 @@ from login_forum import Ui_LoginWindow
 from reportG import Ui_Dialog_Client
 from clientCls import Client
 from OrganizedGUI import Ui_Dialog_Admin
+from PyQt5.QtGui import QImage, QPalette, QBrush
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QApplication
 import PyQt5.uic as  uic
 import os
@@ -23,7 +25,7 @@ from scheduling import Scheduling
 from renovationGUI import Ui_tech_window
 
 
-class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Ui_tech_window,Techn,Product,Client,Scheduling):
+class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_Admin,Ui_tech_window,Techn,Product,Client):
 
     def __init__(self):
         Problem.__init__(self)
@@ -33,6 +35,16 @@ class main_login(QMainWindow,Ui_LoginWindow,Problem,Ui_Dialog_Client,Ui_Dialog_A
         QMainWindow.__init__(self)
         Ui_LoginWindow.__init__(self)
         self.setupUi(self)
+        self.setFixedSize(670, 570)  # sizeofwindow
+        # *****************************add image****************
+
+        oImage = QImage("6719.jpg")
+        sImage = oImage.scaled(QSize(700, 600))  # resize Image to widgets size
+        palette = QPalette()
+        palette.setBrush(QPalette.Window, QBrush(sImage))
+        self.setPalette(palette)
+        self.btn_login.setStyleSheet("background: transparent;")
+        self.label.setStyleSheet("color: white;")
         self.btn_login.clicked.connect(self.redirectTo)
 
 
