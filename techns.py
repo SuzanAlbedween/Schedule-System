@@ -61,4 +61,23 @@ class Techn:
                     return False
                 else:
                     return True
+    def ReturnIDTech(self, username,pwd):
+        tech_file = openpyxl.load_workbook('excel_files\\techns.xlsx')
+        tc_sheet = tech_file['techns']
+        rows = tc_sheet.max_row
+        for i in range(2, rows + 1):
+            if (str(tc_sheet.cell(row=i, column=3).value) == str(username) and str( tc_sheet.cell(row=i, column=4).value) == str(pwd)):
+                return tc_sheet.cell(row=i, column=1).value
+
+
+
+    def ReturnIndexTech(self,id):
+        file = openpyxl.load_workbook('excel_files\\scheduling.xlsx')
+        sheet = file['sheet1']
+        cols = sheet.max_column
+        flage = 0
+        for i in range(1, cols + 1):
+            if (str((sheet.cell(row=1, column=i).value)) == str(id)):
+                flage = i
+        return flage
 
